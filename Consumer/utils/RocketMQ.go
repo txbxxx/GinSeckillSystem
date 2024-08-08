@@ -40,6 +40,6 @@ func Consumer(ConsumerGroup string) (rocketmq.PushConsumer, error) {
 			AccessKey: os.Getenv("RMQ_AKEY"),
 			SecretKey: os.Getenv("RMQ_SKEY"),
 		}),
+		consumerSvc.WithConsumeMessageBatchMaxSize(40),
 	)
-
 }

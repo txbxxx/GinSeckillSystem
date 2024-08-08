@@ -102,7 +102,7 @@ func (service *SecKillService) ASyncSendProducer(ukey string) gin.H {
 			fmt.Println("发送成功")
 		}
 		wg.Done()
-	}, primitive.NewMessage("SecKillTopic", []byte(ukey)))
+	}, primitive.NewMessage("SecKillTopic3", []byte(ukey)))
 	if err != nil {
 		logrus.Error("发送至RocketMQ失败: ", err.Error(), "msg: ", ukey)
 	}

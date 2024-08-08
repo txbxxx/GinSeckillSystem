@@ -41,7 +41,7 @@ func Init() {
 	logrus.SetReportCaller(true)
 
 	//初始化producer
-	PD, err = utils.QueueUtil("SeckillProducerGroup")
+	PD, err = utils.QueueUtil("SeckillProducerGroup3")
 	if err != nil {
 		logrus.Error("连接RocketMQ失败")
 		return

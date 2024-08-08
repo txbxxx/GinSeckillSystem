@@ -33,13 +33,10 @@ func ReceptionMsg() {
 	sig := make(chan os.Signal)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 	//创建Consumer
-	consumer, err := utils.Consumer("SeckillConumserGoup")
+	consumer, err := utils.Consumer("SeckillConumserGoup3")
 	if err != nil {
 		logrus.Error("创建消费者错误: ", err.Error())
 		return
-	}
-	if err != nil {
-		logrus.Error("创建主题失败")
 	}
 
 	//订阅Topic开始消费
@@ -66,7 +63,7 @@ func ReceptionMsg() {
 // Sub 订阅主题开始消费工作
 func Sub(err error, consumer rocketmq.PushConsumer) error {
 	// 订阅Topic开始消费
-	err = consumer.Subscribe("SecKillTopic", consumerSvc.MessageSelector{},
+	err = consumer.Subscribe("SecKillTopic3", consumerSvc.MessageSelector{},
 		func(ctx context.Context, msgs ...*primitive.MessageExt) (consumerSvc.ConsumeResult, error) {
 			for i := range msgs {
 				//开启事物
@@ -90,7 +87,7 @@ func processMsg(split []string, tx *gorm.DB) error {
 
 	for current := 0; current < Redis_time; current++ {
 		//开启Redis锁使用SETNX
-		if flag := conf.RDB.SetNX(context.Background(), "goods_lock:"+split[0], "", time.Second*5).Val(); flag {
+		if flag := conf.RDB.SetNX(context.Background(), "goods_lock:"+split[0], "", time.Second*20).Val(); flag {
 			//减库存
 			//如果事物报错则回滚
 			if txerr := tx.Model(&model.Goods{}).Where("goods_id = ?", split[0]).Update("stock", gorm.Expr("stock - ?", 1)).Error; txerr != nil {
@@ -106,13 +103,12 @@ func processMsg(split []string, tx *gorm.DB) error {
 				tx.Rollback()
 				return err
 			}
-
 			// 操作完成没有报错就删除锁
 			conf.RDB.Del(context.Background(), "goods_lock:"+split[0])
 			return nil
 		} else {
 			//如果没拿到锁就等待2秒
-			time.Sleep(time.Second * 2)
+			time.Sleep(time.Second * 5)
 		}
 	}
 	//return后判断是回滚还是提交
