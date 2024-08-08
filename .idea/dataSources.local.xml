@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="GO-233.11799.286">
+    <data-source name="@localhost" uuid="d5e60559-3b8e-491d-a620-347d8c0d08b8">
+      <database-info product="MariaDB" version="10.10.4-MariaDB-1:10.10.4+maria~ubu2204" jdbc-version="4.2" driver-name="MariaDB Connector/J" driver-version="3.3.3" dbms="MARIADB" exact-version="10.10.4" exact-driver-version="3.3">
+        <extra-name-characters>#@</extra-name-characters>
+        <identifier-quote-string>`</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema">
+            <name qname="@" />
+            <name qname="RocketMQ" />
+          </node>
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+  </component>
+</project>
